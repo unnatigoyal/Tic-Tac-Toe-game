@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    <head>
+        <title>
+            tic tac toe
+        </title>
+        <link rel="stylesheet" href="tictactoe.css">
+    </head>
+    <body >
+        <div id="game_view" v-cloak>
+            <div id="game_view_info">
+             {{infoMessage}}
+            </div>
+            <div id="game_view_squares">
+                <div 
+                v-for="(square,i) in squares"
+                v-on:click="activeGame.makemove(i)"
+                v-bind:class="{ highlighted: square.ishighlighted }"
+                class="game_view_square">
+                {{ square.value }}
+                </div>
+            </div>      
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="square.js"></script>
+        <script src="game.js"></script>
+        <script type="text/javascript">
+        let activeGame=new game();
+        let gamevue=new Vue({
+            el:'#game_view',
+            data:activeGame,
+            computed:{
+                infoMessage: function(){
+                 
+                if(this.inProgress){
+                     return ('it is '+ this.turn + ' turn');
+                 }
+                 if(this.winner){
+                     return (' Congratulations '+ this.winner + ' won');
+                 }
+                 if(!this.winner && !this.inProgress ){
+                     return ('It is a draw');
+                 }
+                }
+            }
+        });
+        </script>
+    </body>
+</html>
+
+
+
